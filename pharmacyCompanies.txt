@@ -1,0 +1,9 @@
+ABL 5162846831 Abbott Labs
+ADW 7188548385 Adwe Labs
+ALC 8008625266 Alcon
+ALG 8004338871 Allergan
+BMS 8003322056 Bristol Meyers Squibb
+GAL 6004097702 Galderma
+JJM 8005263967 Johnson & Johnson
+NOV 8627782100 Novartis
+PGP 2129806400 Proctor & Gamble

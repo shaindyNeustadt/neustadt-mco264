@@ -13,7 +13,7 @@ public void print(File file){
 			System.out.println("\tFile Name: " + f.getName() + " Size:" + f.length());
 		}
 		else{
-			System.out.println("Directory Name: " + f.getName() + " Size:" + f.length());
+			System.out.println("Directory Name: " + f.getName() + " Size:" + f.getTotalSpace());
 			print(f);
 		}
 	}

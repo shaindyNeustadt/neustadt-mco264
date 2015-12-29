@@ -4,13 +4,13 @@ import java.util.Random;
 import java.util.Stack;
 import java.util.Vector;
 
-public class GridRecursive<E> {
+public class GridIterative<E> {
 	//a Vector of Vectors of Cells
 			private Vector<Vector<Cell<E>>> cells;
 		
 		
 		
-		public GridRecursive(int rows, int columns){
+		public GridIterative(int rows, int columns){
 			cells = new Vector<Vector <Cell<E>>>();
 			
 			//initialize each cell of the grid
@@ -144,7 +144,7 @@ public class GridRecursive<E> {
 		
 		static public void main(String []  args){
 			Character character = new Character('X');
-			GridRecursive<Character> theGrid = new GridRecursive<Character>(5,5);
+			GridIterative<Character> theGrid = new GridIterative<Character>(5,5);
 			theGrid.setGrid(40, 'X');
 			System.out.println(theGrid);
 			System.out.println(theGrid.countBlobs(character));

@@ -8,7 +8,7 @@ public class UserInterface {
 		
 		//can't figure out how define a grid of cell objects
 		//each cell can store an object (among other things)
-		GridRecursive<Character> theGrid = new GridRecursive<Character>(10,10);
+		GridIterative<Character> theGrid = new GridIterative<Character>(10,10);
 		theGrid.setGrid(30, 'X');
 		System.out.println(theGrid.toString());
 		System.out.println(theGrid.countBlobs(character));

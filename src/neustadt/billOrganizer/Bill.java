@@ -31,6 +31,11 @@ public class Bill implements Comparable<Bill>, Serializable{
 		this.billID = ++lastID;
 	}
 	
+	//when read in from Serializable file, to reset the lastID
+	public static void setLastID(int id){
+		lastID = id;
+	}
+
 	@Override
 	public int compareTo(Bill bill) {
 		return this.billID.compareTo(bill.billID);
@@ -78,11 +83,11 @@ public class Bill implements Comparable<Bill>, Serializable{
 	public String toString(){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		StringBuilder billInfo = new StringBuilder();
-		billInfo.append("\n" + billID);
-		billInfo.append(" " + vendorName);
-		billInfo.append(" " + amountDue);
-		billInfo.append(" " + dateFormat.format(dateDue.getTime()));
-		billInfo.append(" " + billType);
+		billInfo.append("\nBill ID: " + billID);
+		billInfo.append(" Vendor Name: " + vendorName);
+		billInfo.append(" Amount Due: " + amountDue);
+		billInfo.append(" Date: " + dateFormat.format(dateDue.getTime()));
+		billInfo.append(" Bill Type: " + billType);
 		return billInfo.toString();
 	}
 }

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
-public class BinaryTree<T extends Comparable<T>> {
+public class BalancedBinaryTree<T extends Comparable<T>> {
 	private BNode<T> root;
 	private boolean found; // used by remove methods
 
-	public BinaryTree() {
+	public BalancedBinaryTree() {
 		root = null; // empty tree
 	}
 
@@ -19,7 +19,7 @@ public class BinaryTree<T extends Comparable<T>> {
 		// iterative approach to inserting data
 		if (root == null) {
 			// nothing in tree yet
-			root = new BNode(data);
+			root = new BNode<T>(data);
 
 		} else {
 			while (curr != null) {
@@ -224,7 +224,6 @@ public class BinaryTree<T extends Comparable<T>> {
 		System.out.println(root.getData());
 		traverseP(root.getLC());
 		traverseP(root.getRC());
-
 	}
 
 	private void traverseP(BNode<T> root) {
@@ -233,25 +232,36 @@ public class BinaryTree<T extends Comparable<T>> {
 		System.out.println(root.getData());
 		traverseP(root.getLC());
 		traverseP(root.getRC());
-
 	}
-
-	public ArrayList<T> traverseInOrder() {
+	
+	public void traverseInOrder(){
+    	traverseI(root.getLC());
+    	System.out.println(root.getData());
+    	traverseI(root.getRC());
+    }
+    private void traverseI(BNode<T> root){
+    	if (root == null) return; //anchor case
+    	traverseI(root.getLC());
+    	System.out.println(root.getData());
+    	traverseI(root.getRC());
+    	
+    }	
+	
+	//Get Tree in sorted order
+	public ArrayList<T> getInOrder() {
 		ArrayList<T> listInOrder = new ArrayList<T>();
-		traverseI(root.getLC(), listInOrder);
+		getI(root.getLC(), listInOrder);
 		listInOrder.add(root.getData());
-		System.out.println(root.getData());
-		traverseI(root.getRC(), listInOrder);
+		getI(root.getRC(), listInOrder);
 		return listInOrder;
 	}
 
-	private void traverseI(BNode<T> root, ArrayList<T> listInOrder) {
+	private void getI(BNode<T> root, ArrayList<T> listInOrder) {
 		if (root == null)
 			return; // anchor case
-		traverseI(root.getLC(), listInOrder);
+		getI(root.getLC(), listInOrder);
 		listInOrder.add(root.getData());
-		System.out.println(root.getData());
-		traverseI(root.getRC(), listInOrder);
+		getI(root.getRC(), listInOrder);
 	}
 
 	// if found, returns the data of the element, otherwise returns null
@@ -271,19 +281,37 @@ public class BinaryTree<T extends Comparable<T>> {
 			return tree.getData();
 	}
 
+	//Recursive Balance Tree method
+	public void balanceTreeRecur() {
+		ArrayList<T> orderedTree = getInOrder();
+		root = null;
+		insertTree(0, orderedTree.size() -1, orderedTree);
+	}
+	
+	public void insertTree(int low, int high, ArrayList<T> orderedTree){
+		if(low == high){
+			insert(orderedTree.get(low));
+		}
+		else if(low + 1 == high){
+			insert(orderedTree.get(low));
+			insert(orderedTree.get(high));
+		}
+		else{
+			int mid = (low + high) / 2;
+			insertRecur(orderedTree.get(mid));
+			insertTree(low, mid -1, orderedTree);
+			insertTree(mid +1, high, orderedTree);
+		}
+	}
+	
+	//Iterative Balance Tree Method
 	public void balanceTree() {
-		ArrayList<T> traversedTree = traverseInOrder();
+		ArrayList<T> traversedTree = getInOrder();
 		int index = (traversedTree.size() - 1) / 2;
 		T midValue = traversedTree.get(index);
 		root = new BNode<T>(midValue);
 
 		balanceT(index, traversedTree);
-
-		/*
-		 * System.out.println("MID: " + mid); insert(traversedTree.get(mid));
-		 * System.out.println("Remove: " + (mid)); insert(traversedTree.get(mid
-		 * + index + 1)); System.out.println("Remove: " + (mid + index + 1));
-		 */
 	}
 
 	private void balanceT(int index, ArrayList<T> traversedTree) {
@@ -297,7 +325,6 @@ public class BinaryTree<T extends Comparable<T>> {
 			int increment = mid + 1;
 			do {
 				if (!used.contains(temp)) {
-					System.out.println("MID: " + temp);
 					insert(traversedTree.get(temp));
 					used.add(temp);
 				}

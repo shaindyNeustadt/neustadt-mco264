@@ -12,6 +12,8 @@ public class PriorityQueue<T extends Comparable<T> & Serializable> {
 	private Comparator<T> comparator;
 	private BillCriteria criteria;
 
+	// Constructor instantiates a new PriorityQueue by BillCriteria, and sets
+	// the Comparator to match
 	public PriorityQueue(BillCriteria criteria) {
 		this.criteria = criteria;
 		setComparator();
@@ -23,6 +25,9 @@ public class PriorityQueue<T extends Comparable<T> & Serializable> {
 	}
 
 	public T dequeue() throws ListEmptyException, NotFoundException {
+		if (list.getFirst() == null) {
+			throw new ListEmptyException();
+		}
 		T data = list.getFirst().getData();
 		list.remove(data);
 		return data;
@@ -54,9 +59,10 @@ public class PriorityQueue<T extends Comparable<T> & Serializable> {
 		}
 	}
 
-	public Iterator<T> getIterator(){
+	public Iterator<T> getIterator() {
 		return list.iterator();
 	}
+
 	public BillCriteria getCriteria() {
 		return criteria;
 	}

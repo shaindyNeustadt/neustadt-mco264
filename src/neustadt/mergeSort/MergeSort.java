@@ -29,10 +29,7 @@ public class MergeSort {
 		keyboard.close();
 	}
 
-	private int quantity;
-
 	public void generateNums(int quantity) throws FileNotFoundException {
-		this.quantity = quantity;
 		Random generator = new Random();
 		PrintWriter writer = new PrintWriter("numbers.txt");
 		for (int i = 0; i < quantity; i++) {
@@ -60,68 +57,66 @@ public class MergeSort {
 
 				for (int y = 0; y < index; y++) {
 					writer.print(array[y] + " ");
-				}
+					}
 				writer.close();
 				index = 0;
 			}
 		}
 
 		fileReader.close();
-		return merge(1, i);
+		return merge(i-1, i, i+1);
 	}
 
-	private String merge(int firstFileNum, int lastFileNum)
+	private String merge(int firstFileNum, int secondFileNum, int storeFileNum)
 			throws FileNotFoundException {
 		
-		if (firstFileNum == lastFileNum) {
-			return lastFileNum + "sorted.txt";
+		if (firstFileNum == 0) {
+			return secondFileNum + "sorted.txt";
 		}
-
-		int secondFileNum = firstFileNum + 1;
-
-		int[] data = new int[quantity];
-		int index = 0;
-
+	
 		Scanner file1 = new Scanner(new File(firstFileNum + "sorted.txt"));
-		while (file1.hasNext()) {
-			data[index++] = file1.nextInt();
-		}
-
-		file1.close();
-
-		int leftIndex = 0;
-		int middle1 = index - 1;
-		int rightIndex = index;
-		int middle2 = index;
-
 		Scanner file2 = new Scanner(new File(secondFileNum + "sorted.txt"));
-		while (file2.hasNext()) {
-			data[index++] = file2.nextInt();
-		}
-		file2.close();
+	
+		PrintWriter writer = new PrintWriter(storeFileNum + "sorted.txt");
 
-		PrintWriter writer = new PrintWriter(secondFileNum + "sorted.txt");
-
-		int right = index - 1;
-
-		while (leftIndex <= middle1 && rightIndex <= right) {
-			if (data[leftIndex] <= data[rightIndex]) {
-				writer.print(data[leftIndex++] + " ");
+		int num1 = file1.nextInt();
+		int num2 = file2.nextInt();
+		
+		while (num1 != -1 && num2 != -1) {
+			if (num1 <= num2) {
+				writer.print(num1 + " ");
+				if(file1.hasNext()){
+				num1 = file1.nextInt();
+				}
+				else{
+					num1 = -1;
+				}
 			} else {
-				writer.print(data[rightIndex++] + " ");
+				writer.print(num2 + " ");
+				if(file2.hasNext()){
+				num2 = file2.nextInt();
+				}
+				else{
+					num2 = -1;
+				}
 			}
 		}
-		if (leftIndex == middle2) {
-			while (rightIndex <= right) {
-				writer.print(data[rightIndex++] + " ");
+		if (num1 == -1) {
+			writer.print(num2 + " ");
+			while (file2.hasNext())
+			{
+				writer.print(file2.nextInt() + " ");
 			}
 		} else {
-			while (leftIndex <= middle1) {
-				writer.print(data[leftIndex++] + " ");
+			writer.print(num1 + " ");
+			while (file1.hasNext()) {
+				writer.print(file1.nextInt() + " ");
 			}
 		}
 		writer.close();
-		return merge(secondFileNum, lastFileNum);
+		file1.close();
+		file2.close();
+		return merge(firstFileNum -1, storeFileNum, firstFileNum);
 	}
 
 	public static void bubbleSort(int[] numbers, int qty) {

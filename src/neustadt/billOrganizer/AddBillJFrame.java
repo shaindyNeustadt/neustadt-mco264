@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class AddBill extends JFrame{
+public class AddBillJFrame extends JFrame{
 private JLabel text1;
 private JTextField info1;
 private JLabel text2;
@@ -24,7 +24,7 @@ private JLabel text5;
 private JButton button;
 
 
-	public AddBill(BillOrganizer organizer){
+	public AddBillJFrame(BillOrganizer organizer){
 		 setTitle("Add Bill");
 		 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 setSize(500, 300);

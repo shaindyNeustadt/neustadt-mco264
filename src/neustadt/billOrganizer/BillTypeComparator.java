@@ -6,6 +6,6 @@ public class BillTypeComparator implements Comparator<Bill>{
 
 	@Override
 	public int compare(Bill billA, Bill billB){
-		return billA.getBillType().name().compareTo(billB.getBillType().name());
+		return billA.getBillType().compareTo(billB.getBillType());
 	}
 }

@@ -15,12 +15,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-public class Menu extends JFrame {
+import neustadt.linkedList.ListEmptyException;
+
+public class MenuJFrame extends JFrame {
 
 	private JList<String> list;
 	private DefaultListModel<String> listModel;
 
-	public Menu(BillOrganizer organizer) {
+	public MenuJFrame(BillOrganizer organizer) {
 		setTitle("BILL MENU");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(300, 200);
@@ -51,37 +53,41 @@ public class Menu extends JFrame {
 				int index = list.locationToIndex(evt.getPoint());
 				switch (index) {
 				case 0:
-					new AddBill(organizer).setVisible(true);
+					new AddBillJFrame(organizer).setVisible(true);
 					break;
 				case 1:
-					new DisplayBills(organizer.iteratorByDate())
+					new DisplayBillsJFrame(organizer.iteratorByDate())
 							.setVisible(true);
 					break;
 				case 2:
-					new DisplayBills(organizer.iteratorByType())
+					new DisplayBillsJFrame(organizer.iteratorByType())
 							.setVisible(true);
 					break;
 				case 3:
-					new DisplayBills(organizer.iteratorByAmount())
+					new DisplayBillsJFrame(organizer.iteratorByAmount())
 							.setVisible(true);
 					break;
 				case 4:
-					new PayBill(
+					try{
+					new PayBillJFrame(
 							organizer.payNextBill(BillCriteria.BILLDUEDATE),
 							organizer).setVisible(true);
+					}catch(ListEmptyException ex){
+						JOptionPane.showMessageDialog(null, "There are no unpaid bills in the system.");
+					}
 					break;
 				case 5:
-					new PayBill(organizer.payNextBill(BillCriteria.BILLTYPE),
+					new PayBillJFrame(organizer.payNextBill(BillCriteria.BILLTYPE),
 							organizer).setVisible(true);
 					break;
 				case 6:
-					new PayBill(organizer.payNextBill(BillCriteria.BILLAMOUNT),
+					new PayBillJFrame(organizer.payNextBill(BillCriteria.BILLAMOUNT),
 							organizer).setVisible(true);
 					break;
 				case 7:
 					String ID = JOptionPane.showInputDialog(null, "Enter ID:");
 					try {
-						new PayBill(organizer.removeBillByID(Integer
+						new PayBillJFrame(organizer.removeBillByID(Integer
 								.parseInt(ID)), organizer).setVisible(true);
 					} catch (NotFoundException ex) {
 						JOptionPane.showMessageDialog(null, "Bill not found.");

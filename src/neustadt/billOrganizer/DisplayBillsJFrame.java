@@ -8,11 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
-public class DisplayBills extends JFrame {
+public class DisplayBillsJFrame extends JFrame {
 	private JList<String> Jlist;
 	private DefaultListModel<String> listModel;
 
-	public DisplayBills(Iterator<Bill> iter) {
+	public DisplayBillsJFrame(Iterator<Bill> iter) {
 
 		setTitle("View Bills");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

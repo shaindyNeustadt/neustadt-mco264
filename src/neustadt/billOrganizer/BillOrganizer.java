@@ -10,13 +10,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import neustadt.linkedList.LinkedListIterator;
-import neustadt.linkedList.Node;
-
 public class BillOrganizer {
 	ArrayList<PriorityQueue<Bill>> queues;
 	SortedLinkedList<Bill> list;
 
+	//no args constructor
 	public BillOrganizer() {
 		this.queues = new ArrayList<PriorityQueue<Bill>>();
 		queues.add(new PriorityQueue<Bill>(BillCriteria.BILLDUEDATE));
@@ -26,6 +24,7 @@ public class BillOrganizer {
 		list = new SortedLinkedList<Bill>();
 	}
 
+	//Constructor from Serializable file
 	public BillOrganizer(String fileName) throws FileNotFoundException,
 			IOException, ClassNotFoundException {
 		this();
@@ -37,17 +36,15 @@ public class BillOrganizer {
 		Iterator<Bill> iter = list.iterator();
 		Bill bill = null;
 		while (iter.hasNext()) {
-			// for (Bill b : list) {
 			bill = iter.next();
-			for (PriorityQueue<Bill> q : queues) {
+			for(PriorityQueue<Bill> q: queues){
 				q.enqueue(bill);
-				// }
 			}
-
 		}
 		Bill.setLastID(bill.getID());
 	}
 
+	//Constructor that reads in data from textFile
 	public BillOrganizer(Scanner readFile) {
 		this();
 		Bill bill = null;
@@ -55,7 +52,6 @@ public class BillOrganizer {
 			bill = new Bill(readFile);
 			insert(bill);
 		}
-		Bill.setLastID(bill.getID());
 	}
 
 	public void insert(Bill bill) {
@@ -66,14 +62,7 @@ public class BillOrganizer {
 	}
 
 	public Bill payNextBill(BillCriteria criteria) {
-		// Comparator<Bill> comparator = null;
 		Bill bill = null;
-		/*
-		 * switch(criteria){ case BILLDUEDATE: comparator = new
-		 * BillDateComparator(); break; case BILLAMOUNT: comparator = new
-		 * BillDateComparator(); break; case BILLTYPE: comparator = new
-		 * BillDateComparator(); break; }
-		 */
 		for (PriorityQueue<Bill> q : queues) {
 			if (q.getCriteria().compareTo(criteria) == 0) {
 				bill = q.dequeue();
@@ -89,12 +78,19 @@ public class BillOrganizer {
 	}
 
 	public Bill removeBillByID(int ID) {
-		Bill bill = list.find(ID);
-		list.remove(bill);
-		for (PriorityQueue<Bill> q : queues) {
-			q.remove(bill);
+		Iterator<Bill> iter = list.iterator();
+		while(iter.hasNext()){
+		Bill bill = iter.next();
+		if(bill.getID() == ID){
+			list.remove(bill);
+			for (PriorityQueue<Bill> q : queues) {
+				q.remove(bill);
+				}
+			return bill;
 		}
-		return bill;
+		}
+		throw new NotFoundException();
+		
 	}
 
 	public void closeOrganizer() throws FileNotFoundException, IOException {
@@ -112,11 +108,7 @@ public class BillOrganizer {
 		}
 		return sum;
 	}
-
-	public String toString() {
-		return list.toString();
-	}
-
+	
 	public PriorityQueue<Bill> getQueue(int index) {
 		return queues.get(index);
 	}

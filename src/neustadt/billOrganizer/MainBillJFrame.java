@@ -11,17 +11,17 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class BillJFrame extends JFrame {
+public class MainBillJFrame extends JFrame {
 
 	public static void main(String[] args) {
-		new BillJFrame().setVisible(true);
+		new MainBillJFrame().setVisible(true);
 	}
 
 	private JButton button1;
 	private JButton button2;
 	private BillOrganizer organizer = null;
 
-	public BillJFrame() {
+	public MainBillJFrame() {
 		setTitle("Bill Organizer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(300, 150);
@@ -38,7 +38,7 @@ public class BillJFrame extends JFrame {
 				try {
 					Scanner readFile = new Scanner(new File("bills.txt"));
 					organizer = new BillOrganizer(readFile);
-					new Menu(organizer).setVisible(true);
+					new MenuJFrame(organizer).setVisible(true);
 					setVisible(false);
 				} catch (FileNotFoundException ex) {
 					System.out
@@ -53,7 +53,7 @@ public class BillJFrame extends JFrame {
 			public void actionPerformed(ActionEvent event) {
 				try {
 					organizer = new BillOrganizer("bills.ser");
-					new Menu(organizer).setVisible(true);
+					new MenuJFrame(organizer).setVisible(true);
 					setVisible(false);
 				} catch (FileNotFoundException ex) {
 					System.out

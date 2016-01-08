@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+import neustadt.linkedList.ListEmptyException;
+
 public class UserInterface {
 
 	public static void main(String[] args) {
@@ -92,8 +94,12 @@ public class UserInterface {
 					break;
 				}
 				System.out.print("Paid Bill:");
+				try{
 				System.out.println(organizer.payNextBill(criteria));
 				System.out.println("Bill Total: $" + organizer.totalBills());
+				}catch(ListEmptyException ex){
+					System.out.println(" There are no unpaid bills in the system.");
+				}
 				break;
 			case 4:
 				System.out.println("Pay bill by bill ID:");

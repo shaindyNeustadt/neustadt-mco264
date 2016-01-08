@@ -5,11 +5,11 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class PayBill extends JFrame{
+public class PayBillJFrame extends JFrame{
 private JLabel text1;
 private JLabel text2;
 
-	public PayBill(Bill bill, BillOrganizer organizer){
+	public PayBillJFrame(Bill bill, BillOrganizer organizer){
 		 setTitle("BILL PAID");
 		 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		 setSize(525, 150);
